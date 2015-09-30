@@ -76,7 +76,7 @@ module CapEC2
           instance_has_tag?(i, stages_tag, stage) &&
             instance_has_tag?(i, project_tag, application) &&
             (fetch(:ec2_filter_by_status_ok?) ? instance_status_ok?(i) : true) &&
-            (fetch(:ec2_branch_tag) ? instance_has_tag?(i, branch_tag, branch) : true)
+            ((fetch(:ec2_branch_tag) && ENV['CAP_EC2_FILTER_BRANCH']) ? instance_has_tag?(i, branch_tag, branch) : true)
         end
       end
       servers.flatten.sort_by {|s| s.tags["Name"]}
